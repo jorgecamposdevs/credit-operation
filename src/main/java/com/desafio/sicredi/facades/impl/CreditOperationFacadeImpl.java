@@ -6,17 +6,16 @@ import com.desafio.sicredi.dtos.responses.CreditOperationResponseDTO;
 import com.desafio.sicredi.facades.CreditOperationFacade;
 import com.desafio.sicredi.mappers.CreditOperationMappers;
 import com.desafio.sicredi.service.CreditOperationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CreditOperationFacadeImpl implements CreditOperationFacade {
 
-    @Autowired
-    private CreditOperationService creditOperationService;
+    private final CreditOperationService creditOperationService;
 
-    @Autowired
-    private CreditOperationMappers creditOperationMappers;
+    private final CreditOperationMappers creditOperationMappers;
 
     @Override
     public CreditOperationResponseDTO contractCredit(CreditOperationRequestDTO creditOperationRequestDTO) {

@@ -5,7 +5,6 @@ import com.desafio.sicredi.dtos.responses.CreditOperationDetailResponseDTO;
 import com.desafio.sicredi.dtos.responses.CreditOperationResponseDTO;
 import com.desafio.sicredi.facades.CreditOperationFacade;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CreditOperationController {
 
-    @Autowired
-    private CreditOperationFacade creditOperationFacade;
+    private final CreditOperationFacade creditOperationFacade;
 
     @PostMapping
     public ResponseEntity<CreditOperationResponseDTO> contractCredit(@RequestBody CreditOperationRequestDTO creditOperationRequestDTO) {
