@@ -4,6 +4,7 @@ import com.desafio.sicredi.dtos.requests.CreditOperationRequestDTO;
 import com.desafio.sicredi.dtos.responses.CreditOperationDetailResponseDTO;
 import com.desafio.sicredi.dtos.responses.CreditOperationResponseDTO;
 import com.desafio.sicredi.facades.CreditOperationFacade;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class CreditOperationController {
     private final CreditOperationFacade creditOperationFacade;
 
     @PostMapping
-    public ResponseEntity<CreditOperationResponseDTO> contractCredit(@RequestBody CreditOperationRequestDTO creditOperationRequestDTO) {
+    public ResponseEntity<CreditOperationResponseDTO> contractCredit(@RequestBody @Valid CreditOperationRequestDTO creditOperationRequestDTO) {
         return new ResponseEntity<>(creditOperationFacade.contractCredit(creditOperationRequestDTO), HttpStatus.CREATED);
     }
 
