@@ -1,10 +1,12 @@
 package com.desafio.sicredi.client;
 
 import com.desafio.sicredi.dtos.responses.ProductCreditResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@Slf4j
 @Component
 public class ProductCreditClient {
 
@@ -14,7 +16,7 @@ public class ProductCreditClient {
     private static final String BASE_URL =
             "https://desafio-credito-sicredi.wiremockapi.cloud";
 
-    public Boolean isCreditEligible(String code, String segment, String value) {
+    public ProductCreditResponseDTO isCreditEligible(String code, String segment, String value) {
 
         ProductCreditResponseDTO productCreditResponseDTO =
                 webClient.get()
@@ -24,7 +26,13 @@ public class ProductCreditClient {
                         .bodyToMono(ProductCreditResponseDTO.class)
                         .block();
 
-        return productCreditResponseDTO != null &&
-                Boolean.TRUE.equals(productCreditResponseDTO.getPermiteContratar());
+
+//        if (productCreditResponseDTO != null) {
+//            if (!Boolean.TRUE.equals(productCreditResponseDTO.getPermiteContratar())) {
+//                log.info("<===================START==================>");
+//            }
+//        }
+
+        return productCreditResponseDTO;
     }
 }

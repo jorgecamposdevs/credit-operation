@@ -1,8 +1,10 @@
 package com.desafio.sicredi.service.impl;
 
 import com.desafio.sicredi.client.ProductCreditClient;
+import com.desafio.sicredi.dtos.responses.ProductCreditResponseDTO;
 import com.desafio.sicredi.entities.BeneficiaryPartnerLegalEntity;
 import com.desafio.sicredi.entities.CreditOperationEntity;
+import com.desafio.sicredi.exceptions.handlers.CreditOperationException;
 import com.desafio.sicredi.repository.BeneficiaryPartnerRepository;
 import com.desafio.sicredi.repository.CreditOperationRepository;
 import com.desafio.sicredi.service.CreditOperationService;
@@ -27,7 +29,7 @@ public class CreditOperationServiceImpl implements CreditOperationService {
     @Override
     public CreditOperationEntity contractCredit(CreditOperationEntity creditOperationEntity) {
 
-        Boolean allowedToHire = productCreditClient.isCreditEligible(creditOperationEntity.getCodigoProdutoCredito(),
+        ProductCreditResponseDTO productCreditResponseDTO = productCreditClient.isCreditEligible(creditOperationEntity.getCodigoProdutoCredito(),
                 creditOperationEntity.getSegmento(), String.valueOf(creditOperationEntity.getValorOperacao()));
 
         log.info(
@@ -35,10 +37,10 @@ public class CreditOperationServiceImpl implements CreditOperationService {
                 creditOperationEntity.getCodigoProdutoCredito(),
                 creditOperationEntity.getSegmento(),
                 creditOperationEntity.getValorOperacao(),
-                allowedToHire);
+                productCreditResponseDTO.getPermiteContratar());
 
-        if (!Boolean.TRUE.equals(allowedToHire)) {
-            throw new RuntimeException("Credit operation not allowed");
+        if (productCreditResponseDTO.getPermiteContratar().equals(Boolean.FALSE)) {
+            throw new CreditOperationException("error.unprocessable-entity");
         }
 
         if (SEGMENT_AGRO.equalsIgnoreCase(creditOperationEntity.getSegmento())) {
