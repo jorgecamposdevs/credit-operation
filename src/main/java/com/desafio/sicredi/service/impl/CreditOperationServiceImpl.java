@@ -46,7 +46,7 @@ public class CreditOperationServiceImpl implements CreditOperationService {
         if (SEGMENT_AGRO.equalsIgnoreCase(creditOperationEntity.getSegmento())) {
 
             if (creditOperationEntity.getAreaBeneficiadaHa() == null || creditOperationEntity.getAreaBeneficiadaHa() <= 0) {
-                throw new RuntimeException("Credit operation for AGRO segment requires areaBeneficiadaHa > 0");
+                throw new CreditOperationException("error.agro.area-required");
             }
         }
 
