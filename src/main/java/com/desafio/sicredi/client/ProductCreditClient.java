@@ -30,7 +30,7 @@ public class ProductCreditClient {
         } catch (Exception ex) {
 
             throw new CreditOperationException(
-                    "Erro ao consultar elegibilidade de crédito",
+                    "Error checking credit eligibility",
                     ex
             );
         }
