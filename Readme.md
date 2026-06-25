@@ -21,6 +21,7 @@ Esta aplicação implementa a primeira etapa do processo de contratação, dispo
 * WebClient
 * Lombok
 * Gradle
+* Springdoc OpenAPI (Swagger)
 
 ---
 
@@ -142,6 +143,12 @@ A aplicação estará disponível em:
 
 ```http
 http://localhost:8080
+```
+
+### Executar com Swagger
+
+```http
+http://localhost:8080/swagger-ui/index.html#/
 ```
 
 ---
