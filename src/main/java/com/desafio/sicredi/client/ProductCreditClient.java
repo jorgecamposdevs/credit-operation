@@ -1,6 +1,7 @@
 package com.desafio.sicredi.client;
 
 import com.desafio.sicredi.dtos.responses.ProductCreditResponseDTO;
+import com.desafio.sicredi.exceptions.handlers.CreditOperationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,21 +19,20 @@ public class ProductCreditClient {
 
     public ProductCreditResponseDTO isCreditEligible(String code, String segment, String value) {
 
-        ProductCreditResponseDTO productCreditResponseDTO =
-                webClient.get()
-                        .uri(BASE_URL + "/produtos-credito/{codigo}/permite-contratacao?segmento={segmento}&valorFinanciado={valor}",
-                                code, segment, value)
-                        .retrieve()
-                        .bodyToMono(ProductCreditResponseDTO.class)
-                        .block();
+        try {
 
+            return webClient.get()
+                    .uri(BASE_URL + "/produtos-credito/{codigo}/permite-contratacao?segmento={segmento}&valorFinanciado={valor}",
+                            code, segment, value)
+                    .retrieve()
+                    .bodyToMono(ProductCreditResponseDTO.class)
+                    .block();
+        } catch (Exception ex) {
 
-//        if (productCreditResponseDTO != null) {
-//            if (!Boolean.TRUE.equals(productCreditResponseDTO.getPermiteContratar())) {
-//                log.info("<===================START==================>");
-//            }
-//        }
-
-        return productCreditResponseDTO;
+            throw new CreditOperationException(
+                    "Erro ao consultar elegibilidade de crédito",
+                    ex
+            );
+        }
     }
 }
