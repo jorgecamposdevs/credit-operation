@@ -21,6 +21,7 @@ Esta aplicação implementa a primeira etapa do processo de contratação, dispo
 * WebClient
 * Lombok
 * Gradle
+* ModelMapper
 * Springdoc OpenAPI (Swagger)
 
 ---
